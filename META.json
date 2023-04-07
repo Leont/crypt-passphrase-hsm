@@ -1,10 +1,10 @@
 {
-   "abstract" : "INSERT YOUR ABSTRACT HERE",
+   "abstract" : "A pepper-wrapper using hardware for Crypt::Passphrase",
    "author" : [
       "Leon Timmermans <leont@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "App::ModuleBuildTiny version 0.037",
+   "generated_by" : "App::ModuleBuildTiny version 0.039",
    "license" : [
       "perl_5"
    ],
@@ -21,24 +21,36 @@
       },
       "develop" : {
          "requires" : {
-            "App::ModuleBuildTiny" : "0.037"
+            "App::ModuleBuildTiny" : "0.039"
          }
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
+            "Crypt::HSM" : "0",
+            "Crypt::Passphrase" : "0",
+            "Crypt::Passphrase::Pepper::Base" : "0",
+            "parent" : "0",
             "strict" : "0",
             "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Encode" : "0",
+            "Test::More" : "0",
+            "lib" : "0"
          }
       }
    },
    "provides" : {
       "Crypt::Passphrase::Pepper::HSM" : {
          "file" : "lib/Crypt/Passphrase/Pepper/HSM.pm",
-         "version" : "0.000"
+         "version" : "0.001"
       }
    },
    "release_status" : "stable",
-   "version" : "0.000",
+   "version" : "0.001",
    "x_serialization_backend" : "JSON::PP version 4.16",
    "x_spdx_expression" : "Artistic-1.0-Perl OR GPL-1.0-or-later"
 }
