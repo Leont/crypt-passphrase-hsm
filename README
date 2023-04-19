@@ -14,11 +14,11 @@ SYNOPSIS
 
 DESCRIPTION
 
-    This module wraps another encoder to hash the password using an hmac.
-    By using identifiers for the peppers, it allows for easy rotation of
-    peppers. Unlike traditional mechanisms it relies fully
-
-    It will be able to validate both peppered and unpeppered hashes.
+    This module wraps hashes the password using an hmac. By using
+    identifiers for the peppers, it allows for easy rotation of peppers.
+    Unlike traditional mechanisms it relies fully depends on the secrecy of
+    the peppers in the HSM instead of computational difficulty, as such the
+    key size should probably equal the output size.
 
 METHODS
 
@@ -29,6 +29,11 @@ METHODS
       * provider
 
       The path to the PKCS11 provider. This is mandatory.
+
+      * slot
+
+      The slot used on the provider, this defaults to the first listed
+      slot.
 
       * active
 
@@ -50,13 +55,14 @@ METHODS
 
       * algorithm
 
-      This is the algorithm that's used for hashing. Supported values are
+      This is the algorithm that's used for hashing. It supports any
+      mechanism on your HSM that can sign and verify, common values are
       'sha1-hmac', 'sha224-hmac', 'sha256-hmac', 'sha384-hmac', and
       'sha512-hmac' (the default).
 
  hash_password($password)
 
-    This prehashes the $password.
+    This hashes the $password.
 
 AUTHOR
 
