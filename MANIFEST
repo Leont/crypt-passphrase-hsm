@@ -9,6 +9,7 @@ README
 dist.json
 lib/Crypt/Passphrase/HSM.pm
 lib/Crypt/Passphrase/Pepper/HSM.pm
+metamerge.yml
 t/lib/Crypt/Passphrase/Reversed.pm
 t/hash.t
 t/peppered.t

@@ -10,7 +10,7 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Crypt-Passphrase-HSM",
    "prereqs" : {
@@ -55,6 +55,16 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Leont/crypt-passphrase-hsm/issues"
+      },
+      "repository" : {
+         "type" : "git,",
+         "url" : "git://github.com/Leont/crypt-passphrase-hsm.git",
+         "web" : "https://github.com/Leont/crypt-passphrase-hsm"
+      }
+   },
    "version" : "0.001",
    "x_serialization_backend" : "JSON::PP version 4.16",
    "x_spdx_expression" : "Artistic-1.0-Perl OR GPL-1.0-or-later"
