@@ -1,5 +1,5 @@
 ---
-abstract: 'A pepper-wrapper using hardware for Crypt::Passphrase'
+abstract: 'A hasher using hardware for Crypt::Passphrase'
 author:
   - 'Leon Timmermans <leont@cpan.org>'
 build_requires:
@@ -14,7 +14,7 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: '1.4'
-name: Crypt-Passphrase-Pepper-HSM
+name: Crypt-Passphrase-HSM
 provides:
   Crypt::Passphrase::HSM:
     file: lib/Crypt/Passphrase/HSM.pm

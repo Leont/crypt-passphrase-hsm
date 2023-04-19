@@ -1,6 +1,7 @@
-Revision history for Crypt-Passphrase-Pepper-HSM
+Revision history for Crypt-Passphrase-HSM
 
           - Add Crypt::Passphrase::HSM
+          - Rename dist to Crypt-Passphrase-HSM
 
 0.001     2023-04-07 14:40:14+0200
           - Initial release to an unsuspecting world

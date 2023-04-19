@@ -1,29 +1,22 @@
 NAME
 
-    Crypt::Passphrase::Pepper::HSM - A pepper-wrapper using hardware for
-    Crypt::Passphrase
+    Crypt::Passphrase::HSM - A hasher using hardware for Crypt::Passphrase
 
 SYNOPSIS
 
      my $passphrase = Crypt::Passphrase->new(
          encoder => {
-             module   => 'Pepper::HSM',
+             module   => 'HSM',
              provider => '/usr/lib/pkcs11/some-pkcs11.so',
              active   => '3',
-             inner    => {
-                 module      => 'Argon2',
-                 output_size => 32,
-             },
          },
      );
 
 DESCRIPTION
 
-    This module wraps another encoder to pepper the input to the hash. By
-    using identifiers for the peppers, it allows for easy rotation of
-    peppers. Unlike Crypt::Passphrase::Pepper::Simple it stores the peppers
-    in a hardware security module (or some other PKCS11 implementation of
-    choice) to ensure their confidentiality.
+    This module wraps another encoder to hash the password using an hmac.
+    By using identifiers for the peppers, it allows for easy rotation of
+    peppers. Unlike traditional mechanisms it relies fully
 
     It will be able to validate both peppered and unpeppered hashes.
 
@@ -31,13 +24,7 @@ METHODS
 
  new(%args)
 
-    This creates a new pepper encoder. It takes the following named
-    arguments:
-
-      * inner
-
-      This contains an encoder specification identical to the encoder field
-      of Crypt::Passphrase. It is mandatory.
+    This creates a new encoder. It takes the following named arguments:
 
       * provider
 
@@ -63,14 +50,13 @@ METHODS
 
       * algorithm
 
-      This is the algorithm that's used for peppering. Supported values are
+      This is the algorithm that's used for hashing. Supported values are
       'sha1-hmac', 'sha224-hmac', 'sha256-hmac', 'sha384-hmac', and
       'sha512-hmac' (the default).
 
- prehash_password($password, $algorithm, $identifier)
+ hash_password($password)
 
-    This prehashes the $password using the given $algorithm and
-    $identifier.
+    This prehashes the $password.
 
 AUTHOR
 

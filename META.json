@@ -1,5 +1,5 @@
 {
-   "abstract" : "A pepper-wrapper using hardware for Crypt::Passphrase",
+   "abstract" : "A hasher using hardware for Crypt::Passphrase",
    "author" : [
       "Leon Timmermans <leont@cpan.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Crypt-Passphrase-Pepper-HSM",
+   "name" : "Crypt-Passphrase-HSM",
    "prereqs" : {
       "configure" : {
          "requires" : {
