@@ -87,6 +87,10 @@ This contains an encoder specification identical to the C<encoder> field of C<Cr
 
 The path to the PKCS11 provider. This is mandatory.
 
+=item * slot
+
+The slot used on the provider, this defaults to the first listed slot.
+
 =item * active
 
 This is the identifier of the active pepper. This is mandatory.
