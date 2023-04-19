@@ -8,5 +8,5 @@ META.yml
 README
 dist.json
 lib/Crypt/Passphrase/Pepper/HSM.pm
-t/basic.t
 t/lib/Crypt/Passphrase/Reversed.pm
+t/peppered.t
