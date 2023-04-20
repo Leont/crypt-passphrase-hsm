@@ -148,7 +148,19 @@ This is the algorithm that's used for hashing. It supports any mechanism on your
 
 =head2 hash_password($password)
 
-This hashes the C<$password>.
+This hashes the C<$password> in the HSM using the given algorithm.
+
+=head2 verify_password($password, $hash)
+
+Verify a password with the HSM.
+
+=head2 needs_rehash($hash)
+
+This will check if the hash needs a rehash.
+
+=head2 crypt_subtypes
+
+This returns the chosen algorithm.
 
 =head1 AUTHOR
 
