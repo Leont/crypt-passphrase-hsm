@@ -62,7 +62,19 @@ METHODS
 
  hash_password($password)
 
-    This hashes the $password.
+    This hashes the $password in the HSM using the given algorithm.
+
+ verify_password($password, $hash)
+
+    Verify a password with the HSM.
+
+ needs_rehash($hash)
+
+    This will check if the hash needs a rehash.
+
+ crypt_subtypes
+
+    This returns the chosen algorithm.
 
 AUTHOR
 
