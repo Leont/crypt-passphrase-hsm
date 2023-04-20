@@ -18,6 +18,7 @@ sub new {
 	my $algorithm = delete $args{algorithm} // 'sha512-hmac';
 	my @subtypes = ($algorithm, @{ delete $args{subtypes} || [] });
 	my $prefix = delete $args{prefix} // 'pepper-';
+	my $salt_size = delete $args{salt_size} // 16;
 
 	my $session = $args{session} // do {
 		my $provider = ref $args{provider} ? delete $args{provider} : Crypt::HSM->load(delete $args{provider});
@@ -37,6 +38,7 @@ sub new {
 		subtypes  => \@subtypes,
 		prefix    => $prefix,
 		session   => $session,
+		salt_size => $salt_size,
 	}, $class;
 }
 
@@ -47,9 +49,11 @@ sub hash_password {
 	my ($key) = $self->{session}->find_objects({ label => $label, sign => 1 });
 	croak "No such key $label" if not defined $key;
 
-	my $raw = $self->{session}->sign($self->{algorithm}, $key, $password);
-	my $encoded = encode_base64($raw) =~ tr/=//dr;
-	return "\$$self->{algorithm}\$v=1,id=$self->{active}\$$encoded";
+	my $salt = $self->random_bytes($self->{salt_size});
+	my $encoded_salt = encode_base64($salt, '') =~ tr/=//dr;
+	my $raw = $self->{session}->sign($self->{algorithm}, $key, $password . $salt);
+	my $encoded_hash = encode_base64($raw, '') =~ tr/=//dr;
+	return "\$$self->{algorithm}\$v=2,id=$self->{active}\$$encoded_salt\$$encoded_hash";
 }
 
 sub crypt_subtypes {
@@ -57,7 +61,7 @@ sub crypt_subtypes {
 	return @{ $self->{subtypes} }
 }
 
-my $regex = qr/ \A \$ ([^\$]+) \$ v=1, id=([^\$,]) \$ ([^\$]*) /x;
+my $regex = qr/ \A \$ ([^\$]+) \$ v=2, id=([^\$,]) \$ ([^\$]*) \$ (.*) /x;
 
 sub needs_rehash {
 	my ($self, $hash) = @_;
@@ -67,14 +71,15 @@ sub needs_rehash {
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	my ($algorithm, $id, $encoded_hmac) = $hash =~ $regex or return !!0;
+	my ($algorithm, $id, $encoded_salt, $encoded_hmac) = $hash =~ $regex or die "Fail!";
+	my $salt = decode_base64($encoded_salt);
 	my $hmac = decode_base64($encoded_hmac);
 
 	my $label = "$self->{prefix}$id";
 	my ($key) = $self->{session}->find_objects({ label => $label, verify => 1 });
 	return !!0 if not defined $key;
 
-	return $self->{session}->verify($algorithm, $key, $password, $hmac);
+	return $self->{session}->verify($algorithm, $key, $password . $salt, $hmac);
 }
 
 1;

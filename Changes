@@ -1,5 +1,7 @@
 Revision history for Crypt-Passphrase-HSM
 
+          - Change Crypt::Passphrase::HSM to a salt+pepper construct
+
 0.002     2023-04-20 01:12:29+0200
           - Add Crypt::Passphrase::HSM
           - Rename dist to Crypt-Passphrase-HSM
