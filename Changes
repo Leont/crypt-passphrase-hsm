@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase-HSM
 
           - Adapt to Crypt::HSM 0.010
+          - Fail more graciously on non well-formed hash
 
 0.003     2023-04-20 14:21:52+0200
           - Change Crypt::Passphrase::HSM to a salt+pepper construct

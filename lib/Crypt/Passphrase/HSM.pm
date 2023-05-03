@@ -74,7 +74,7 @@ sub needs_rehash {
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	my ($algorithm, $id, $encoded_salt, $encoded_hmac) = $hash =~ $regex or die "Fail!";
+	my ($algorithm, $id, $encoded_salt, $encoded_hmac) = $hash =~ $regex or return !!0;
 	my $salt = decode_base64($encoded_salt);
 	my $hmac = decode_base64($encoded_hmac);
 
