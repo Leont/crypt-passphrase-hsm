@@ -6,7 +6,7 @@ use warnings;
 our $VERSION = '0.003';
 
 use parent 'Crypt::Passphrase::Pepper::Base';
-use Crypt::Passphrase -encoder;
+use Crypt::Passphrase 0.016 -encoder;
 
 use Carp 'croak';
 use Crypt::HSM 0.010;
@@ -26,6 +26,11 @@ sub new {
 	$args{session}->login($user_type, delete $args{pin}) if $args{pin};
 
 	return $class->SUPER::new(%args);
+}
+
+sub supported_hashes {
+	my ($self) = @_;
+	return map { $_->name } grep { $_->has_flags('sign') && $_->min_key_size <= 64 } $self->{session}->slot->mechanisms;
 }
 
 sub prehash_password {
