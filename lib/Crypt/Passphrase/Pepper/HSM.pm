@@ -3,7 +3,7 @@ package Crypt::Passphrase::Pepper::HSM;
 use strict;
 use warnings;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 use parent 'Crypt::Passphrase::Pepper::Base';
 use Crypt::Passphrase 0.016 -encoder;
