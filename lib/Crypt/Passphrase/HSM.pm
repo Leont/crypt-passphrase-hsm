@@ -8,7 +8,7 @@ our $VERSION = '0.003';
 use Crypt::Passphrase -encoder;
 
 use Carp 'croak';
-use Crypt::HSM;
+use Crypt::HSM 0.010;
 use MIME::Base64;
 
 sub new {
@@ -16,9 +16,6 @@ sub new {
 
 	my $active = delete $args{active} // die 'No active pepper specified';
 	my $algorithm = delete $args{algorithm} // 'sha512-hmac';
-	my @subtypes = ($algorithm, @{ delete $args{subtypes} || [] });
-	my $prefix = delete $args{prefix} // 'pepper-';
-	my $salt_size = delete $args{salt_size} // 16;
 
 	my $session = $args{session} // do {
 		my $provider = ref $args{provider} ? delete $args{provider} : Crypt::HSM->load(delete $args{provider});
@@ -27,6 +24,12 @@ sub new {
 	};
 	my $user_type = delete $args{user_type} // 'user';
 	$session->login($user_type, delete $args{pin}) if $args{pin};
+
+	die "Algorithm '$algorithm' not supported" unless $session->slot->mechanism($algorithm)->has_flags('sign', 'verify');
+
+	my @subtypes = map { $_->name } grep { $_->has_flags('sign', 'verify') } $session->slot->mechanisms;
+	my $prefix = delete $args{prefix} // 'pepper-';
+	my $salt_size = delete $args{salt_size} // 16;
 
 	my $label = "$prefix$active";
 	my ($key) = $session->find_objects({ label => $label, sign => 1 });

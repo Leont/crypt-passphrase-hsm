@@ -9,7 +9,7 @@ use parent 'Crypt::Passphrase::Pepper::Base';
 use Crypt::Passphrase -encoder;
 
 use Carp 'croak';
-use Crypt::HSM;
+use Crypt::HSM 0.010;
 
 sub new {
 	my ($class, %args) = @_;
@@ -18,9 +18,9 @@ sub new {
 	$args{prefix} //= 'pepper-';
 
 	$args{session} //= do {
-		my $provider = ref $args{provider} ? $args{provider} : Crypt::HSM->load(delete $args{provider});
+		my $provider = ref $args{provider} ? delete $args{provider} : Crypt::HSM->load(delete $args{provider});
 		my $slot = delete $args{slot} // ($provider->slots)[0];
-		$provider->open_session($slot);
+		$slot->open_session;
 	};
 	my $user_type = delete $args{user_type} // 'user';
 	$args{session}->login($user_type, delete $args{pin}) if $args{pin};
