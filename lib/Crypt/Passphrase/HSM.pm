@@ -65,7 +65,7 @@ sub hash_password {
 
 sub crypt_subtypes {
 	my $self = shift;
-	return @{ $self->{subtypes} }
+	return @{ $self->{subtypes} };
 }
 
 my $regex = qr/ \A \$ ([^\$]+) \$ v=2, id=([^\$,]) \$ ([^\$]*) \$ (.*) /x;
@@ -167,7 +167,7 @@ This will check if the hash needs a rehash.
 
 =head2 crypt_subtypes
 
-This returns the chosen algorithm.
+This returns the supported algorithms.
 
 =head1 AUTHOR
 
