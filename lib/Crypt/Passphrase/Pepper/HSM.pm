@@ -18,9 +18,13 @@ sub new {
 	$args{prefix} //= 'pepper-';
 
 	$args{session} //= do {
-		my $provider = ref $args{provider} ? delete $args{provider} : Crypt::HSM->load(delete $args{provider});
-		my $slot = delete $args{slot} // ($provider->slots)[0];
-		$slot->open_session;
+		if (ref $args{slot}) {
+			(delete $args{slot})->open_session;
+		} else {
+			my $provider = ref $args{provider} ? delete $args{provider} : Crypt::HSM->load(delete $args{provider});
+			my $slot = defined $args{slot} ? $provider->slot(delete $args{slot}) : ($provider->slots)[0];
+			$slot->open_session;
+		}
 	};
 	my $user_type = delete $args{user_type} // 'user';
 	$args{session}->login($user_type, delete $args{pin}) if $args{pin};
