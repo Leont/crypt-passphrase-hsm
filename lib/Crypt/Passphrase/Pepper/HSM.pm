@@ -28,13 +28,9 @@ sub new {
 	};
 	my $user_type = delete $args{user_type} // 'user';
 	$args{session}->login($user_type, delete $args{pin}) if $args{pin};
+	$args{supported_hashes} //= [ map { $_->name } grep { $_->has_flags('sign') && $_->min_key_size <= 64 } $args{session}->slot->mechanisms ];
 
 	return $class->SUPER::new(%args);
-}
-
-sub supported_hashes {
-	my ($self) = @_;
-	return map { $_->name } grep { $_->has_flags('sign') && $_->min_key_size <= 64 } $self->{session}->slot->mechanisms;
 }
 
 sub prehash_password {
