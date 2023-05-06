@@ -72,8 +72,8 @@ my $regex = qr/ \A \$ ([^\$]+) \$ v=2, id=([^\$,]) \$ ([^\$]*) \$ (.*) /x;
 
 sub needs_rehash {
 	my ($self, $hash) = @_;
-	my ($algorithm, $id) = $hash =~ $regex or return !!1;
-	return $algorithm ne $self->{algorithm} || $id ne $self->{active};
+	my ($algorithm, $id, $salt) = $hash =~ $regex or return !!1;
+	return $algorithm ne $self->{algorithm} || $id ne $self->{active} || length $salt != int(($self->{salt_size} * 4 + 2) / 3);
 }
 
 sub verify_password {
