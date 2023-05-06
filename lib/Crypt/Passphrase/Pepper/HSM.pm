@@ -74,7 +74,7 @@ Crypt::Passphrase::Pepper::HSM - A pepper-wrapper using hardware for Crypt::Pass
 
 This module wraps another encoder to pepper the input to the hash. By using identifiers for the peppers, it allows for easy rotation of peppers. Unlike L<Crypt::Passphrase::Pepper::Simple|Crypt::Passphrase::Pepper::Simple> it stores the peppers in a hardware security module (or some other PKCS11 implementation of choice) to ensure their confidentiality.
 
-It will be able to validate both peppered and unpeppered hashes.
+It will be able to validate both peppered and unpeppered hashes but only create the former.
 
 =head1 METHODS
 
