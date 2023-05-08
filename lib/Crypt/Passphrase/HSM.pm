@@ -3,7 +3,7 @@ package Crypt::Passphrase::HSM;
 use strict;
 use warnings;
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 use Crypt::Passphrase -encoder;
 
