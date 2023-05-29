@@ -1,0 +1,7 @@
+*.bak
+*.swp
+*.swo
+*.tdy
+*.tar.gz
+Crypt-Passphrase-HSM-*
+
