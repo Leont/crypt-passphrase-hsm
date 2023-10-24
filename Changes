@@ -1,5 +1,7 @@
 Revision history for Crypt-Passphrase-HSM
 
+          - Fix test for Crypt::HSM 0.014
+
 0.006     2023-07-03 19:21:08+0200
           - Eliminate warning when skipping test
 
